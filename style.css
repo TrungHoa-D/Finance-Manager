@@ -15,16 +15,17 @@
     background-color: #f1f5f9;
 }
 .block {
-    margin: 15vh 35vw 20vh 35vw;
+    margin: 10vh auto;
     background-color: #fff;
     width: max-content;
+    min-width: 400px;
     height: max-content;
     /* border: 1px solid rgba(0,0,0,1); */
     box-shadow: 3px 3px gray;
     border-radius: 5px;
 }
 form{
-    width: max-content;
+    width: 84%;
 }
 .inter{
     width: 100%;
@@ -58,11 +59,6 @@ input{
 label{
     background-color: #fff;
 }
-#check{
-    display: inline;
-    width: 13px;
-    margin: 0;
-}
 .btn{
     display: block;
     border: 1px solid #ccc;
@@ -93,6 +89,7 @@ label{
     
 }
 #screenshot{
-    width: 100%;
+    margin: auto;
+    width: 400px;
     height: auto;
 }

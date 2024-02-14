@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Quản lý tài chính</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        var caculated= false;
+        var captured= false;
+        function caculate() {
+            event.preventDefault();
+            caculated=true;
+            if(document.getElementById("day").value == "") {
+                alert("Chưa nhập ngày!!!");
+                return;
+            }
+            var income=0;
+            income = document.getElementById("income").value;
+            document.getElementById("left").innerHTML = 
+            "Quỹ tự do tài chính (FFA) - 10% <br>"+
+            "Quỹ Tiết kiệm Dài hạn (LTSS) - 10% <br>"+
+            "Quỹ Giáo dục (EDU) - 10% <br>"+
+            "Quỹ Nhu cầu thiết yếu (NEC) - 55% <br>"+
+            "Quỹ Hưởng thụ (PLAY) - 10% <br>"+
+            "Quỹ cho đi (GIVE) - 5% <br>"
+            ;
+            document.getElementById("right").innerHTML = 
+            `: ${income/10}`+"VND<br>"+
+            `: ${income/10}`+"VND<br>"+
+            `: ${income/10}`+"VND<br>"+
+            `: ${income/100*55}`+"VND<br>"+
+            `: ${income/10}`+"VND<br>"+
+            `: ${income/20}`+"VND<br>"
+            ;
+            // alert(income);
+            console.log(document.getElementById("day").value);
+        }
+        function captureScreen() {
+            if(!caculated) {
+                alert("Chưa tính toán!!!");
+                return;
+            }
+            captured=true;
+            const captureElement = document.getElementById('cap');
+            html2canvas(captureElement).then(canvas => {
+                canvas.toBlob(blob => {
+                    const blobURL = URL.createObjectURL(blob);
+                    const screenshotElement = document.getElementById('screenshot');
+                    screenshotElement.style.display="block";
+                    screenshotElement.src = blobURL;
+                }, 'image/png');
+            });
+        }
+        function downloadImage() {
+            if(!captured) {
+                alert("Chưa chụp màn hình!!!");
+                return;
+            }
+            const screenshotElement = document.getElementById('screenshot');
+            const imgURL = screenshotElement.src;
+            const downloadLink = document.createElement('a');
+            downloadLink.href = imgURL;
+            downloadLink.download ='Quản lý tài chính ngày '+document.getElementById("day").value+'.png';
+            downloadLink.click();
+        }
+    </script>
+</head>
+<body>
+    <div class="block">
+        <form id="cap" action="" class="content">
+            <h1>Quản lý tài chính</h2>
+            <label for="income">Số tiền dư (VNĐ)</label>
+            <input id="income" type="number" placeholder="Nhập số tiền dư ở đây!">
+            <label for="day">Ngày</label>
+            <input id="day" type="date">
+            <div id="split">
+                <div id="left"></div>
+                <div id="right"></div>
+            </div>
+        </form>
+        <div class="inter">
+            <img style="display: none;" id="screenshot" alt="Screenshot will appear here">
+            <input type="button" value="Tính toán" class="btn" onclick="caculate();">
+            <input type="button" class="btn" value="Chụp màn hình" onclick="captureScreen();">
+            <input type="button" class="btn" value="Tải ảnh xuống" onclick="downloadImage();">
+        </div>
+    </div>
+</body>
+</html>
